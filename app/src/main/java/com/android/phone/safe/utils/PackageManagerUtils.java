@@ -1,9 +1,13 @@
 package com.android.phone.safe.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.util.Log;
+
+import java.io.File;
 
 /**
  * Created by 罗勇 on 2016/8/17.
@@ -51,4 +55,20 @@ public class PackageManagerUtils {
         }
         return packageInfo;
     }
+
+    /**
+     * 安装apk的工具方法
+     *
+     * @param context 应用上下文
+     * @param file    新的apk的文件
+     */
+    public static void installAPK(Context context, File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(Uri.parse("file://" + file.getAbsolutePath()),
+                "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
+
+
 }
