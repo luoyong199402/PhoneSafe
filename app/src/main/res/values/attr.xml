@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SettingItem">
+        <attr name="titil" format="string"></attr>
+        <attr name="desc_on" format="string"></attr>
+        <attr name="desc_off" format="string"></attr>
+        <attr name="checked" format="boolean"></attr>
+    </declare-styleable>
+</resources>
