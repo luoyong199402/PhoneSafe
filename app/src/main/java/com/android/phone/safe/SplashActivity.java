@@ -2,6 +2,7 @@ package com.android.phone.safe;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -36,6 +37,16 @@ public class SplashActivity extends AppCompatActivity {
      * 日志消息
      */
     private static final String TAG = "SplashActivity";
+
+    /**
+     * 进入主页的时间管理器
+     */
+    private long timeManager;
+
+    /**
+     * 配置文件管理器
+     */
+    private SharedPreferences sp;
 
     /**
      * 检测更新
@@ -132,9 +143,25 @@ public class SplashActivity extends AppCompatActivity {
      * 进入Home页面
      */
     private void enterHone() {
-        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-        SplashActivity.this.startActivity(intent);
-        SplashActivity.this.finish();
+        long totolTime = System.currentTimeMillis() - timeManager;
+        final long needWaitTime = 2000L - totolTime;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (needWaitTime > 0) {
+                    try {
+                        Thread.sleep(needWaitTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                SplashActivity.this.startActivity(intent);
+                SplashActivity.this.finish();
+            }
+        }).start();
+
     }
 
     /**
@@ -166,19 +193,29 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        sp = getSharedPreferences("config", SplashActivity.MODE_PRIVATE);
+
         // 动态修改应用程序的版本信息
         Log.d(TAG, "onCreate: 获取版本信息");
         versionInfo = (TextView) findViewById(R.id.version_info);
         versionInfo.setText("版本号： " + PackageManagerUtils.getVersionName(this));
 
-        // 联网检查更新
-        Log.d(TAG, "onCreate: 联网检测更新");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                checkVersionUpdate();
-            }
-        }).start();
+        timeManager = System.currentTimeMillis();
+
+        // 判断是否自动更新
+        if (sp.getBoolean("app_auto_update", false)) {
+            // 联网检查更新
+            Log.d(TAG, "onCreate: 联网检测更新");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    checkVersionUpdate();
+                }
+            }).start();
+        } else {
+            enterHone();
+        }
+
     }
 
     /**
@@ -191,7 +228,7 @@ public class SplashActivity extends AppCompatActivity {
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-            conn.setConnectTimeout(5000);
+            conn.setConnectTimeout(2000);
             conn.setReadTimeout(3000);
             conn.connect();
             InputStream inputStream = conn.getInputStream();
