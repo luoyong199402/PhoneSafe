@@ -25,7 +25,12 @@
         <activity
             android:name=".SettingActivity"
             android:label="@string/title_activity_setting"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".PhoneSafeSetup1" />
+        <activity android:name=".PhoneSafeSetup2" />
+        <activity android:name=".PhoneSafeSetup3" />
+        <activity android:name=".PhoneSafeSetup4" />
+        <activity android:name=".PhoneSafeFinishPage"></activity>
     </application>
 
 </manifest>
