@@ -25,7 +25,6 @@ public class SMSReceiver extends BroadcastReceiver {
             SmsMessage sms = SmsMessage.createFromPdu((byte[]) obj);
             String sender = sms.getOriginatingAddress();
             String content = sms.getMessageBody();
-
             if (sp.getString("securityPhoneNumber", "").equals(sender)) {  // 表示安全号码一致
                 if ("#*localtion*#".equals(content)) {
                     Log.d(TAG, "onReceive: 发送地址");
