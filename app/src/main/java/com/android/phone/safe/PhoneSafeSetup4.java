@@ -72,6 +72,7 @@ public class PhoneSafeSetup4 extends BasePhoneSafeActivity implements View.OnCli
         SharedPreferences.Editor edit = sp.edit();
         edit.putBoolean("isConfigPhoneSafe", true);
         edit.commit();
+
         Intent intent = new Intent(PhoneSafeSetup4.this, PhoneSafeFinishPage.class);
         startActivity(intent);
         finish();

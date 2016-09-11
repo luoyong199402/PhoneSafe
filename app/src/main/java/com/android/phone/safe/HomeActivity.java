@@ -3,6 +3,7 @@ package com.android.phone.safe;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.phone.safe.utils.PasswordUtils;
+
+import static android.provider.Telephony.Sms.getDefaultSmsPackage;
 
 public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -71,6 +74,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // 设置事件
         gridView.setOnItemClickListener(this);
+
+        // 将该应用设置为默认短信应用
+        if (!getDefaultSmsPackage(this).equals(getPackageName())) {
+            Intent deafultSMS = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+            deafultSMS.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, getPackageName());
+            startActivity(deafultSMS);
+        }
+
     }
 
     /**
