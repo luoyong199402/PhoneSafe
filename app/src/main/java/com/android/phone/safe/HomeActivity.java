@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         final AlertDialog.Builder dialog = new AlertDialog.Builder(HomeActivity.this);
         View dialogShow = null;
         // 表示第一进入这个页面， 设置密码
-        if ("".equals(sp.getString("enter_phone_safe_pwd", ""))) {
+        if ("".equals(sp.getString("enterPhoneSafePwd", ""))) {
             // 设置密码
             dialogShow = View.inflate(HomeActivity.this, R.layout.dialog_enter_phone_safe_set_password, null);
             Button cancel = (Button) dialogShow.findViewById(R.id.cancel);
@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     if (pwdVal.equals(pwdConfirmVal)) {
                         // 保存密码
-                        edit.putString("enter_phone_safe_pwd", PasswordUtils.encodeString(pwdVal));
+                        edit.putString("enterPhoneSafePwd", PasswordUtils.encodeString(pwdVal));
                         edit.commit();
                         enterPhoneSafe();
                         alertDialog.dismiss();
@@ -138,7 +138,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                         return ;
                     }
 
-                    if (PasswordUtils.encodeString(pwdVal).equals(sp.getString("enter_phone_safe_pwd", ""))) {
+                    if (PasswordUtils.encodeString(pwdVal).equals(sp.getString("enterPhoneSafePwd", ""))) {
                         enterPhoneSafe();
                         alertDialog.dismiss();
                     } else {

@@ -20,10 +20,11 @@
         android:text="通过绑定SIN卡: \n下次重启时,发现sim改变就会发出报警信息\n"/>
 
     <com.android.phone.safe.ui.SettingItem
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        ly:title="点击绑定sim卡"
-        ly:desc_on="sim绑定"
+    android:id="@+id/bindSIM"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    ly:title="点击绑定sim卡"
+    ly:desc_on="sim绑定"
         ly:desc_off="sim卡没有绑定"
         ly:checked="false">
     </com.android.phone.safe.ui.SettingItem>

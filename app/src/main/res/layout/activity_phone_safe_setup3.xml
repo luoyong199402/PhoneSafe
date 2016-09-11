@@ -19,11 +19,14 @@
         android:text="SIM卡变更后\n报警短信会发给安全号码" />
 
     <EditText
+        android:inputType="number"
+        android:id="@+id/phone_number"
         android:hint="请输入报警号码"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/choise_contact"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp"
