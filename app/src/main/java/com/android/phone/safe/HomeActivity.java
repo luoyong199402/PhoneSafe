@@ -1,5 +1,7 @@
 package com.android.phone.safe;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.phone.safe.receiver.MyAdmin;
 import com.android.phone.safe.utils.PasswordUtils;
 
 import static android.provider.Telephony.Sms.getDefaultSmsPackage;
@@ -82,6 +85,16 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             startActivity(deafultSMS);
         }
 
+        // 启动设备管理员权限
+        Intent deviceAdmin = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+        // 激活的设备管理者
+        ComponentName componentName = new ComponentName(this, MyAdmin.class);
+        // 设置激活的设备管理者
+        deviceAdmin.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+        // 设置描述信息
+        deviceAdmin.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                "可以使安全位置功能更加强大");
+        startActivity(deviceAdmin);
     }
 
     /**
